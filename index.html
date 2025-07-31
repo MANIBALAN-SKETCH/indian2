@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>&lt;model-viewer&gt; AR example</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="demo-styles.css">
+  <!-- The following libraries and polyfills are recommended to maximize browser support -->
+  <!-- NOTE: you must adjust the paths as appropriate for your project -->
+  <!-- 💁 OPTIONAL: The :focus-visible polyfill removes the focus ring for some input types -->
+  <script src="https://unpkg.com/focus-visible@5.0.2/dist/focus-visible.js" defer></script>
+  <style>
+    /* Add your custom styles here */
+    #watermark-logo {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      width: 50px; /* Reduced size */
+      opacity: 0.3; /* Adjust the opacity as needed */
+    }
+  </style>
+</head> 
+<body>
+  <div id="card">
+    <!-- All you need to put beautiful, interactive 3D content on your site: -->
+    <model-viewer src="https://cdn.glitch.global/f82fa300-1de8-403f-8b1d-08ef58c3a4ad/f1.glb?v=1721450583420"
+                  ios-src="https://cdn.glitch.me/f82fa300-1de8-403f-8b1d-08ef58c3a4ad/f1.usdz?v=1721450687169"
+                  poster="https://cdn.glitch.global/f82fa300-1de8-403f-8b1d-08ef58c3a4ad/tmp_84c7ad69-f7db-41da-8034-5ec56909dfdf.png?v=1721375130692"
+                  alt="A 3D model of an Indian"
+                  shadow-intensity="1.5"
+                  camera-controls
+                  autoplay
+                  ar
+                  ar-modes="scene-viewer webxr quick-look">
+    </model-viewer>
+    <section class="attribution">
+      <span>
+        <h1>INDIAN</h1>
+        <span> By RANKRAZE</span>
+      </span>
+      
+      <audio id="background-music" src="https://cdn.glitch.global/f82fa300-1de8-403f-8b1d-08ef58c3a4ad/cbi.mp3?v=1721445014614" loop></audio>
+      <button id="play-button">Play Music</button>
+      <button id="stop-button" style="display: none;">Stop Music</button>
+    </section>
+  </div>
+  
+  <footer>
+    <a href="https://www.rankraze.com/" target="_blank">
+      <img src="https://cdn.glitch.global/f82fa300-1de8-403f-8b1d-08ef58c3a4ad/tmp_42ef1bc0-fc85-4965-91c5-d633de9dbcf2.png?v=1721376776917" alt="remix button" aria-label="remix" height="80">
+    </a>
+  </footer>
+  
+  <a href="https://allreal.io/" target="_blank">
+    <img id="watermark-logo" src="https://cdn.glitch.global/f82fa300-1de8-403f-8b1d-08ef58c3a4ad/XRLOGO.png?v=1721547428014" alt="Watermark Logo">
+  </a>
+
+  <!-- 💁 Include both scripts below to support all browsers! -->
+  <!-- Loads <model-viewer> for modern browsers: -->
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+  <script>
+    window.addEventListener('DOMContentLoaded', (event) => {
+        const music = document.getElementById('background-music');
+        const playButton = document.getElementById('play-button');
+        const stopButton = document.getElementById('stop-button');
+        
+        playButton.addEventListener('click', () => {
+            music.play().then(() => {
+                playButton.style.display = 'none'; // Hide play button after playing
+                stopButton.style.display = 'inline'; // Show stop button
+            }).catch(error => {
+                console.log("Music playback prevented:", error);
+            });
+        });
+
+        stopButton.addEventListener('click', () => {
+            music.pause();
+            music.currentTime = 0; // Reset music to start
+            stopButton.style.display = 'none'; // Hide stop button after stopping
+            playButton.style.display = 'inline'; // Show play button
+        });
+    });
+  </script>
+</body>
+</html>
